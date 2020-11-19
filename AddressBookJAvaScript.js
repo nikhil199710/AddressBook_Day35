@@ -116,6 +116,10 @@ class Contact {
        console.log("Contact "+fName+" "+lName+" does not exist!");
    }
   }
+  function countContact(count) {
+      count += 1;
+      return count;
+  }
   try{
   addressBookArr.push(new Contact  ("Nikhil", "yadav", "saltLake", "Kolkata", "WestBengal", "700401", "7896541238", "nikhil@gmail.com"));
   }catch(e){
@@ -128,9 +132,11 @@ class Contact {
   }
   console.log(addressBookArr);
   
-  editContact("Nikhil", "yadav", "address", "Bihar");
+  editContact("Mahesh", "Reddy", "address", "Bihar");
   console.log(addressBookArr);
   
-  deleteContact("Nikhil", "yadav");
+  deleteContact("Mahesh", "Reddy");
   console.log(addressBookArr);
+  
+  console.log("No of contacts : "+ addressBookArr.reduce(countContact, 0));
   
