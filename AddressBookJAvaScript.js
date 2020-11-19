@@ -106,13 +106,23 @@ class Contact {
       console.log("Contact Does Not Exist");
   }
   }
+  
+  function deleteContact(fName,lName){
+      let deleteContact = contactExists(fName,lName);
+      if(contactExists(fName,lName)){
+          addressBookArr.pop(contactExists(fName,lName));
+       console.log("Contact "+fName+" "+lName+" removed successfully!!");
+   }  else{
+       console.log("Contact "+fName+" "+lName+" does not exist!");
+   }
+  }
   try{
   addressBookArr.push(new Contact  ("Nikhil", "yadav", "saltLake", "Kolkata", "WestBengal", "700401", "7896541238", "nikhil@gmail.com"));
   }catch(e){
      console.error(e);
   }
   try{
-    addressBookArr.push(new Contact("Akhil", "yadav", "saltLake", "Kolkata", "WestBengal", "700401", "4161616316", "akhil@gmail.com"));
+    addressBookArr.push(new Contact  ("Akhil", "yadav", "saltLake", "Kolkata", "WestBengal", "700401", "4161616316", "akhil@gmail.com"));
   }catch(e){
     console.error(e);
   }
@@ -121,12 +131,6 @@ class Contact {
   editContact("Nikhil", "yadav", "address", "Bihar");
   console.log(addressBookArr);
   
+  deleteContact("Nikhil", "yadav");
+  console.log(addressBookArr);
   
-  
-  
-  
-  
-  
-  
-  
- 
