@@ -132,10 +132,10 @@ class Contact {
   }
   console.log(addressBookArr);
   
-  editContact("Mahesh", "Reddy", "address", "Bihar");
+  editContact("Nikhil", "yadav", "address", "Bihar");
   console.log(addressBookArr);
   
-  deleteContact("Mahesh", "Reddy");
+  deleteContact("Nikhil", "yadav");
   console.log(addressBookArr);
   
   console.log("No of contacts : "+ addressBookArr.reduce(countContact, 0));
