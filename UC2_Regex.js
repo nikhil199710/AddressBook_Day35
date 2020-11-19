@@ -73,7 +73,7 @@ class Contact {
   }
 }  
 try{
-let contact = new Contact("Ruthik", "Reddy", "Miyapur", "Hyderabad", "Telangana", "500049", "8950887489", "ruthik@gmail.com");
+let contact = new Contact("Nikhil", "yadav", "saltLake", "Kolkata", "WestBengal", "700401", "7896541238", "nikhil@gmail.com");
 console.log(contact.toString());
 }catch(e){
   console.error(e);
