@@ -1,80 +1,186 @@
 class Contact {
 
-  constructor(...params) {
-    this.firstName = params[0];
-    this.lastName = params[1];
-    this.address = params[2];
-    this.city = params[3];
-    this.state = params[4];
-    this.zip = params[5];
-    this.phoneNo = params[6];
-    this.email = params[7];
+    constructor(...params) {
+      this.firstName = params[0];
+      this.lastName = params[1];
+      this.address = params[2];
+      this.city = params[3];
+      this.state = params[4];
+      this.zip = params[5];
+      this.phoneNo = params[6];
+      this.email = params[7];
+    }
+  
+    get firstName() {return this._firstName;}
+    set firstName(firstName) { 
+        const nameRegexPattern = RegExp("^[A-Z]{1}[a-z]{2,}$");
+        if (nameRegexPattern.test(firstName)) this._firstName = firstName;
+        else throw "Invalid First Name";
+    }
+    
+    get lastName() {return this._lastName;}
+    set lastName(lastName) {
+        const nameRegexPattern = RegExp("^[A-Z]{1}[a-z]{2,}$");
+        if (nameRegexPattern.test(lastName)) this._lastName = lastName;
+        else throw "Invalid Last Name";
+    }
+    
+    get address() {return this._address;}
+    set address(address) {
+        const locationRegex = RegExp("^[A-Z]{1}[a-z]{3,}$");
+        if(locationRegex.test(address))this._address = address; 
+        else throw "Invalid Address";
+    }
+    
+    get city() {return this._city;}
+    set city(city) {
+        const locationRegex = RegExp("^[A-Z]{1}[a-z]{3,}$");
+        if(locationRegex.test(city))this._city = city; 
+        else throw "Invalid City";
+    }
+    
+    get state() {return this._state;}
+    set state(state) {
+        const locationRegex = RegExp("^[A-Z]{1}[a-zA-Z ]{3,}$");
+        if(locationRegex.test(state))this._state = state; 
+        else throw "Invalid State";
+    }
+    
+    get zip() {return this._zip;}
+    set zip(zip) {
+        const pinRegex = RegExp("^[0-9]{6}$");
+        if(pinRegex.test(zip))this._zip = zip;
+        else throw "Zip is Invalid";
+    }
+    
+    get phoneNo() {return this._phoneNo;}
+    set phoneNo(phoneNo) {
+        const phoneRegex = RegExp("^([+][0-9]{2})?[0-9]{10}$");
+        if(phoneRegex.test(phoneNo)) this._phoneNo = phoneNo;
+        else throw "Invalid Phone No";
+    }
+    
+    get email() {return this._email;}
+    set email(email) {
+        const emailRegex = RegExp("^([a-z]){1,}[a-z0-9]*([.+_-]){0,1}[0-9a-z]+(@){1}([0-9a-z]+)(\\.([a-z]){2,}){1}(\\.[a-z]{2,})?$");
+        if(emailRegex.test(email)) this._email = email;
+        else throw "Invalid Email";
+    }
+  
+    toString(){
+        return "First Name : "+ this.firstName + ", Last Name : "+ this.lastName + ", Address : "+ this.address + 
+        ", city : "+ this.city + ", State : "+ this.state +", Zip : "+ this.zip+ ", Phone No : "+ this.phoneNo + ", Email : "+ this.email;
+    }
+  } 
+  
+  let addressBookArr = new Array();
+  let contactsCityMap = new Map();
+   let contactsStateMap = new Map();
+   let countCityMap = new Map();
+   let countStateMap = new Map();
+  function contactExists(fName, lName){
+    return addressBookArr.some(u => u.firstName == fName && u.lastName == lName);
   }
+  function addContact(newContact){
+      if(contactExists(newContact.firstName, newContact.lastName)){
+          throw "Already Present";
+      }else{
+          addressBookArr.push(newContact);
+      }
+   }
+  
+  function editContact(fName, lName, property, value){
+    if(contactExists(fName, lName)){
+    switch(property){
+        case "address":
+            addressBookArr.find((contact) => contact.firstName == fName).address = value;
+            break;
+        case "city":
+            addressBookArr.find((contact) => contact.firstName == fName).city = value;
+            break;
+        case "state":
+            addressBookArr.find((contact) => contact.firstName == fName).state = value;
+            break;
+        case "zip":
+            addressBookArr.find((contact) => contact.firstName == fName).zip = value;
+            break;
+        case "phone":
+            addressBookArr.find((contact) => contact.firstName == fName).phoneNo = value;
+            break;
+        case "email":
+            addressBookArr.find((contact) => contact.firstName == fName).email = value;
+            break;
+        default:
+            console.log("Enter valid property");
+    }
+  }else{
+      console.log("Contact Does Not Exist");
+  }
+  }
+  
+  function deleteContact(fName,lName){
+      let deleteContact = contactExists(fName,lName);
+      if(contactExists(fName,lName)){
+          addressBookArr.pop(contactExists(fName,lName));
+       console.log("Contact "+fName+" "+lName+" removed successfully!!");
+   }  else{
+       console.log("Contact "+fName+" "+lName+" does not exist!");
+   }
+  }
+  function countContact(count) {
+      count += 1;
+      return count;
+  }
+  function searchContactByCity(city) {
+      return addressBookArr.filter((contact) => contact.city == city);
+    }
+  
+  function searchContactByState(state) {
+      return addressBookArr.filter((contact) => contact.state == state);
+    }
+  function viewContactsByCity(){
+      addressBookArr.filter((contact) => contactsCityMap.set(contact.city, searchContactByCity(contact.city)));
+      return contactsCityMap;
+  }
+  
+  function viewContactsByState(){
+      addressBookArr.filter((contact) => contactsCityMap.set(contact.state, searchContactByCity(contact.state)));
+      return contactsStateMap;
+  }
+  function countByCity(){
+      addressBookArr.filter((contact) => countCityMap.set(contact.city, searchContactByCity(contact.city).length));
+      return countCityMap;
+  }
+  
+  function countByState(){
+      addressBookArr.filter((contact) => countStateMap.set(contact.state, searchContactByCity(contact.state).length));
+      return countStateMap;
+  }
+  
+  let contact1 = new Contact  ("Nikhil", "yadav", "saltLake", "Kolkata", "WestBengal", "700401", "7896541238", "nikhil@gmail.com");
+    let contact2 = new Contact("Akhil", "yadav", "saltLake", "Kolkata", "WestBengal", "700401", "4161616316", "akhil@gmail.com");
+   try{
+      addressBookArr.push(contact1);
+   }catch(e){
+       console.error(e);
+   }
+  try{
+      addressBookArr.push(contact2);
+  }catch(e){
+      console.error(e);
+  }
+  console.log(addressBookArr);
 
-  get firstName() {return this._firstName;}
-  set firstName(firstName) { 
-      const nameRegexPattern = RegExp("^[A-Z]{1}[a-z]{2,}$");
-      if (nameRegexPattern.test(firstName)) this._firstName = firstName;
-      else throw "Invalid First Name";
-  }
+  console.log(addressBookArr);
   
-  get lastName() {return this._lastName;}
-  set lastName(lastName) {
-      const nameRegexPattern = RegExp("^[A-Z]{1}[a-z]{2,}$");
-      if (nameRegexPattern.test(lastName)) this._lastName = lastName;
-      else throw "Invalid Last Name";
-  }
+  console.log("No of contacts : "+ addressBookArr.reduce(countContact, 0));
   
-  get address() {return this._address;}
-  set address(address) {
-      const locationRegex = RegExp("^[A-Z]{1}[a-z]{3,}$");
-      if(locationRegex.test(address))this._address = address; 
-      else throw "Invalid Address";
+  try{
+      addContact(contact1);
+      }catch(e){
+          console.error(e);
   }
-  
-  get city() {return this._city;}
-  set city(city) {
-      const locationRegex = RegExp("^[A-Z]{1}[a-z]{3,}$");
-      if(locationRegex.test(city))this._city = city; 
-      else throw "Invalid City";
-  }
-  
-  get state() {return this._state;}
-  set state(state) {
-      const locationRegex = RegExp("^[A-Z]{1}[a-zA-Z ]{3,}$");
-      if(locationRegex.test(state))this._state = state; 
-      else throw "Invalid State";
-  }
-  
-  get zip() {return this._zip;}
-  set zip(zip) {
-      const pinRegex = RegExp("^[0-9]{6}$");
-      if(pinRegex.test(zip))this._zip = zip;
-      else throw "Zip is Invalid";
-  }
-  
-  get phoneNo() {return this._phoneNo;}
-  set phoneNo(phoneNo) {
-      const phoneRegex = RegExp("^([+][0-9]{2})?[0-9]{10}$");
-      if(phoneRegex.test(phoneNo)) this._phoneNo = phoneNo;
-      else throw "Invalid Phone No";
-  }
-  
-  get email() {return this._email;}
-  set email(email) {
-      const emailRegex = RegExp("^([a-z]){1,}[a-z0-9]*([.+_-]){0,1}[0-9a-z]+(@){1}([0-9a-z]+)(\\.([a-z]){2,}){1}(\\.[a-z]{2,})?$");
-      if(emailRegex.test(email)) this._email = email;
-      else throw "Invalid Email";
-  }
+  console.log(searchContactByCity("Kolkata"));
+  console.log(viewContactsByCity());
+  console.log(countByCity());
 
-  toString(){
-      return "First Name : "+ this.firstName + ", Last Name : "+ this.lastName + ", Address : "+ this.address + 
-      ", city : "+ this.city + ", State : "+ this.state +", Zip : "+ this.zip+ ", Phone No : "+ this.phoneNo + ", Email : "+ this.email;
-  }
-}  
-try{
-let contact = new Contact("Nikhil", "yadav", "saltLake", "Kolkata", "WestBengal", "700401", "7896541238", "nikhil@gmail.com");
-console.log(contact.toString());
-}catch(e){
-  console.error(e);
-}
