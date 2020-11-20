@@ -127,9 +127,16 @@ class Contact {
       count += 1;
       return count;
   }
-  let contact1 = new Contact  ("Nikhil", "yadav", "saltLake", "Kolkata", "WestBengal", "700401", "7896541238", "nikhil@gmail.com");
-   let contact2 = new Contact("Akhil", "yadav", "saltLake", "Kolkata", "WestBengal", "700401", "4161616316", "akhil@gmail.com");
-   try{
+  function searchContactByCity(city) {
+      return addressBookArr.filter((contact) => contact.city == city);
+    }
+  
+  function searchContactByState(state) {
+      return addressBookArr.filter((contact) => contact.state == state);
+    }
+    let contact1 = new Contact  ("Nikhil", "yadav", "saltLake", "Kolkata", "WestBengal", "700401", "7896541238", "nikhil@gmail.com");
+    let contact2 = new Contact("Akhil", "yadav", "saltLake", "Kolkata", "WestBengal", "700401", "4161616316", "akhil@gmail.com");
+    try{
       addressBookArr.push(contact1);
    }catch(e){
        console.error(e);
@@ -154,4 +161,6 @@ class Contact {
       }catch(e){
           console.error(e);
   }
+  console.log(searchContactByCity("Kolkata"));
+
  
