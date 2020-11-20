@@ -76,6 +76,8 @@ class Contact {
   let addressBookArr = new Array();
   let contactsCityMap = new Map();
    let contactsStateMap = new Map();
+   let countCityMap = new Map();
+   let countStateMap = new Map();
   function contactExists(fName, lName){
     return addressBookArr.some(u => u.firstName == fName && u.lastName == lName);
   }
@@ -145,10 +147,19 @@ class Contact {
       addressBookArr.filter((contact) => contactsCityMap.set(contact.state, searchContactByCity(contact.state)));
       return contactsStateMap;
   }
+  function countByCity(){
+      addressBookArr.filter((contact) => countCityMap.set(contact.city, searchContactByCity(contact.city).length));
+      return countCityMap;
+  }
+  
+  function countByState(){
+      addressBookArr.filter((contact) => countStateMap.set(contact.state, searchContactByCity(contact.state).length));
+      return countStateMap;
+  }
   
   let contact1 = new Contact  ("Nikhil", "yadav", "saltLake", "Kolkata", "WestBengal", "700401", "7896541238", "nikhil@gmail.com");
     let contact2 = new Contact("Akhil", "yadav", "saltLake", "Kolkata", "WestBengal", "700401", "4161616316", "akhil@gmail.com");
-     try{
+   try{
       addressBookArr.push(contact1);
    }catch(e){
        console.error(e);
@@ -159,7 +170,7 @@ class Contact {
       console.error(e);
   }
   console.log(addressBookArr);
-  
+
   console.log(addressBookArr);
   
   console.log("No of contacts : "+ addressBookArr.reduce(countContact, 0));
@@ -171,4 +182,5 @@ class Contact {
   }
   console.log(searchContactByCity("Kolkata"));
   console.log(viewContactsByCity());
+  console.log(countByCity());
 
